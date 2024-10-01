@@ -1,0 +1,53 @@
+﻿@model Product
+
+<form method="post">
+	<div class="border p-3 my-4">
+		<div class="row pb-2">
+			<h2>Delete Product</h2>
+			<hr />
+		</div>
+		<div class="mb-3 row p-1">
+			<label asp-for="Title">Title</label>
+			<input asp-for="Title" disabled class="form-control" />
+		</div>
+		<div class="mb-3 row p-1">
+			<label asp-for="Description">Description</label>
+			<textarea rows="3" asp-for="Description" disabled class="form-control"></textarea>
+		</div>
+		<div class="mb-3 row p-1">
+			<label asp-for="ISBN">ISBN</label>
+			<input asp-for="ISBN" disabled class="form-control" />
+		</div>
+		<div class="mb-3 row p-1">
+			<label asp-for="Author">Author</label>
+			<input asp-for="Author" disabled class="form-control" />
+		</div>
+		<div class="mb-3 row p-1">
+			<label asp-for="ListPrice">List Price</label>
+			<input asp-for="ListPrice" disabled class="form-control" />
+		</div>
+		<div class="mb-3 row p-1">
+			<label asp-for="Price">Price</label>
+			<input asp-for="Price" disabled class="form-control" />
+			<span asp-validation-for="Price" class="text-danger"></span>
+		</div>
+		<div class="mb-3 row p-1">
+			<label asp-for="Price50">Price 50+</label>
+			<input asp-for="Price50" disabled class="form-control" />
+		</div>
+		<div class="mb-3 row p-1">
+			<label asp-for="Price100">Price 100+</label>
+			<input asp-for="Price100" disabled class="form-control" />
+		</div>
+		<div class="row">
+			<div class="col-6 col-md-3"><button type="submit" class="btn btn-primary form-control">Update</button></div>
+			<div class="col-6 col-md-3"><a asp-controller="Product" asp-action="Index" class="btn btn-secondary form-control">Cancel</a></div>
+		</div>
+	</div>
+</form>
+
+@section Scripts {
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}
