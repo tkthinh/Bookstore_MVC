@@ -2,6 +2,10 @@ using Bookstore.DataAccess.Repository;
 using Bookstore.DataAccess.Repository.IRepository;
 using Bookstore.DataAcess.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Bookstore.Utility;
+using Bookstore.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +15,20 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+   options.LoginPath = "/Identity/Account/Login";
+   options.LogoutPath = "/Identity/Account/Logout";
+   options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+});
+
+builder.Services.AddIdentity<ApplicationUser , IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+builder.Services.AddRazorPages();
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
@@ -28,7 +45,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
+
+app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
